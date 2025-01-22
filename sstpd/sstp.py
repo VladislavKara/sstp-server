@@ -44,6 +44,8 @@ class State(Enum):
 class SSTPProtocol(Protocol):
 
     def __init__(self, logging):
+        self.factory = None
+        self.transport = None
         self.logging = logging
         self.loop = asyncio.get_event_loop()
         self.state = State.SERVER_CALL_DISCONNECTED
