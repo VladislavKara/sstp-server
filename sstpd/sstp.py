@@ -537,7 +537,10 @@ class SSTPProtocol(Protocol):
 
     def sstp_msg_call_disconnect_ack(self):
         if self.state == State.CALL_DISCONNECT_ACK_PENDING:
-            self.transport.close()
+            if self.transport is not None:
+                self.transport.close()
+            else:
+                self.logging.warning('Transport is not set.')
         elif self.state in (State.CALL_ABORT_PENDING,
                 State.CALL_ABORT_TIMEOUT_PENDING,
                 State.CALL_DISCONNECT_TIMEOUT_PENDING):
